@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
+	<meta charset="utf-8">
+	<title>3D Printer Setup</title>
+	<script>
+		var d = document;
+		function B() { window.open("../settings","_self"); }
+        function H() {window.open("https://kno.wled.ge/features/settings/#wifi-settings");}
+        function gId(c) {return d.getElementById(c);}
+        function so(id, e, v) {gId(id).style.display = e.value == v? 'block':'none';}
+        function sp(e) { so('blp',e, '0'); so('evt',e,'0'); so('crp',e, '1') }
+        function lp() {
+            var cn = "";
+            pJson = JSON.parse(localStorage.getItem("wledP"));
+            delete pJson["0"];
+            var arr = Object.entries(pJson);
+            for (var key of (arr||[]))
+	        {
+                let i = parseInt(key[0]);
+                cn += `<option value="${i}">${key[1].n}</option>` 
+            }
+            gId('eoff').innerHTML = cn; 
+            gId('econ').innerHTML = cn; 
+            gId('eidl').innerHTML = cn;
+            gId('estr').innerHTML = cn; 
+            gId('ebht').innerHTML = cn; 
+            gId('enht').innerHTML = cn;
+            gId('ehom').innerHTML = cn; 
+            gId('epro').innerHTML = cn; 
+            gId('epus').innerHTML = cn; 
+            gId('eerr').innerHTML = cn;
+            gId('ecoo').innerHTML = cn;
+        }
+        function os(form) {
+            this.Sf.MD.value = 'device\\' + this.Sf.MD.value;
+        }
+    </script>
+	<style>
+		@import url("style.css");
+	</style>
+</head>
+<body onload="lp()">
+	<form id="form_s" name="Sf" method="post" onsubmit="os(this)">
+        <div class="toprow">
+		<div class="helpB"><button type="button" onclick="H()">?</button></div>
+		<button type="button" onclick="B()">Back</button><button type="submit">Save & Connect</button><hr>
+		</div>
+		<h2>Please select a printer</h2>
+        <select onchange="sp(this)">
+		<option value="0">Bambulab</option>
+		<option value="1">Creality Marlin</option>
+		</select><br>
+        <div id='blp'>
+            Printer's IP:<br>
+            <input name="MS" type="text" required  minlength="7" maxlength="15" size="15" placeholder="xxx.xxx.xxx.xxx" pattern="^((\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.){3}(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])$"><br>
+            <span hidden>Access Code: <br><input type="text" name="MQUSER" value='bblp'></span> <br>
+            Access Code: <br><input type="text" required name="MQPASS"><br>
+            Serial #: <br><input type="text" required name="MD"><br>
+        </div>
+        <div id='crp'  style="display: none;">
+            <h3>Coming Very Soon</h3>
+        </div>
+        <div id='evt'>
+            <h3>Event Mappings</h3>
+            Turned Off: <select id='eoff' name='EOFF'></select><br>
+            Connected: <select id='econ' name='ECON'></select><br>
+            Idle: <select id='eidl' name='EIDL'></select><br>
+            Print Starting: <select id='estr' name='ESTR'></select><br>
+            Bed Heating: <select id='ebht' name='EBHT'></select><br>
+            Nozzle Heating: <select id='enht' name='ENHT'></select><br>
+            Homing: <select id='ehom' name='EHOM'></select><br>
+            Printing Progress: <select id='epro' name='EPRO'></select><br>
+            Pause: <select id='epus'> name='EPUS'</select><br>
+            Error: <select id='eerr' name='EERR'></select><br>
+            Cooling: <select id='ecoo' name='ECOO'></select>
+        </div>
+		<hr>
+		<button type="button" onclick="B()">Back</button><button type="submit">Save & Connect</button>
+	</form>
+</body>
+</html>

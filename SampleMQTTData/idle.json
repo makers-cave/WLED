@@ -1,0 +1,89 @@
+{
+  "print": {
+    "ams": {
+      "ams": [
+        {
+          "humidity": "1",
+          "id": "0",
+          "temp": "25.5",
+          "tray": [
+            {
+              "bed_temp": "0",
+              "bed_temp_type": "0",
+              "cali_idx": -1,
+              "cols": ["2850E0FF"],
+              "ctype": 0,
+              "drying_temp": "0",
+              "drying_time": "0",
+              "id": "0",
+              "nozzle_temp_max": "270",
+              "nozzle_temp_min": "220",
+              "remain": 0,
+              "tag_uid": "0000000000000000",
+              "tray_color": "2850E0FF",
+              "tray_diameter": "0.00",
+              "tray_id_name": "",
+              "tray_info_idx": "GFG99",
+              "tray_sub_brands": "",
+              "tray_type": "PETG",
+              "tray_uuid": "00000000000000000000000000000000",
+              "tray_weight": "0",
+              "xcam_info": "000000000000000000000000"
+            },
+            {
+              "bed_temp": "0",
+              "bed_temp_type": "0",
+              "cali_idx": -1,
+              "cols": ["FFFFFFFF"],
+              "ctype": 0,
+              "drying_temp": "0",
+              "drying_time": "0",
+              "id": "1",
+              "nozzle_temp_max": "230",
+              "nozzle_temp_min": "190",
+              "remain": 0,
+              "tag_uid": "0000000000000000",
+              "tray_color": "FFFFFFFF",
+              "tray_diameter": "0.00",
+              "tray_id_name": "",
+              "tray_info_idx": "GFL99",
+              "tray_sub_brands": "",
+              "tray_type": "PLA",
+              "tray_uuid": "00000000000000000000000000000000",
+              "tray_weight": "0",
+              "xcam_info": "000000000000000000000000"
+            },
+            { "id": "2" },
+            {
+              "bed_temp": "0",
+              "bed_temp_type": "0",
+              "cali_idx": -1,
+              "cols": ["161616FF"],
+              "ctype": 0,
+              "drying_temp": "0",
+              "drying_time": "0",
+              "id": "3",
+              "nozzle_temp_max": "270",
+              "nozzle_temp_min": "220",
+              "remain": 0,
+              "tag_uid": "0000000000000000",
+              "tray_color": "161616FF",
+              "tray_diameter": "0.00",
+              "tray_id_name": "",
+              "tray_info_idx": "GFG99",
+              "tray_sub_brands": "",
+              "tray_type": "PETG",
+              "tray_uuid": "00000000000000000000000000000000",
+              "tray_weight": "0",
+              "xcam_info": "000000000000000000000000"
+            }
+          ]
+        }
+      ],
+      "version": 57
+    },
+    "command": "push_status",
+    "msg": 1,
+    "sequence_id": "102"
+  }
+}

@@ -554,6 +554,7 @@ void serveSettings(AsyncWebServerRequest* request, bool post)
     else if (url.indexOf(".css") > 0) subPage = SUBPAGE_CSS;
     else if (url.indexOf("wifi") > 0) subPage = SUBPAGE_WIFI;
     else if (url.indexOf("leds") > 0) subPage = SUBPAGE_LEDS;
+    else if (url.indexOf("3dp") > 0) subPage = SUBPAGE_3DP;
     else if (url.indexOf("ui")   > 0) subPage = SUBPAGE_UI;
     else if (url.indexOf("sync") > 0) subPage = SUBPAGE_SYNC;
     else if (url.indexOf("time") > 0) subPage = SUBPAGE_TIME;
@@ -587,6 +588,7 @@ void serveSettings(AsyncWebServerRequest* request, bool post)
     switch (subPage) {
       case SUBPAGE_WIFI   : strcpy_P(s, PSTR("WiFi")); strcpy_P(s2, PSTR("Please connect to the new IP (if changed)")); forceReconnect = true; break;
       case SUBPAGE_LEDS   : strcpy_P(s, PSTR("LED")); break;
+      case SUBPAGE_3DP   : strcpy_P(s, PSTR("3dp")); break;
       case SUBPAGE_UI     : strcpy_P(s, PSTR("UI")); break;
       case SUBPAGE_SYNC   : strcpy_P(s, PSTR("Sync")); break;
       case SUBPAGE_TIME   : strcpy_P(s, PSTR("Time")); break;
@@ -627,6 +629,7 @@ void serveSettings(AsyncWebServerRequest* request, bool post)
 #ifndef WLED_DISABLE_2D
     case SUBPAGE_2D      : response = request->beginResponse_P(200, "text/html", PAGE_settings_2D,   PAGE_settings_2D_length);   break;
 #endif
+    case SUBPAGE_3DP      : response = request->beginResponse_P(200, "text/html", PAGE_settings_3DP,   PAGE_settings_2D_length);   break;
     case SUBPAGE_LOCK    : {
       correctPIN = !strlen(settingsPIN); // lock if a pin is set
       createEditHandler(correctPIN);

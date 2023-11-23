@@ -712,7 +712,14 @@ void handleSettingsSet(AsyncWebServerRequest *request, byte subPage)
     }
   }
   #endif
-
+  if (subPage == SUBPAGE_3DP){
+    mqttEnabled = true;
+    strlcpy(mqttServer, request->arg(F("MS")).c_str(), MQTT_MAX_SERVER_LEN+1);
+    mqttPort = 8883;
+    strlcpy(mqttUser, request->arg(F("MQUSER")).c_str(), 41);
+    strlcpy(mqttPass, request->arg(F("MQPASS")).c_str(), 65);
+    strlcpy(mqttDeviceTopic, request->arg(F("MD")).c_str(), MQTT_MAX_TOPIC_LEN+1);
+  }
   lastEditTime = millis();
   // do not save if factory reset or LED settings (which are saved after LED re-init)
   doSerializeConfig = subPage != SUBPAGE_LEDS && !(subPage == SUBPAGE_SEC && doReboot);

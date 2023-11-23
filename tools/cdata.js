@@ -322,6 +322,11 @@ writeChunks(
       filter: "html-minify",
     },
     {
+      file: "settings_3DP.htm",
+      name: "PAGE_settings_3DP",
+      method: "gzip",
+      filter: "html-minify",
+    },{
       file: "settings_pin.htm",
       name: "PAGE_settings_pin",
       method: "gzip",
