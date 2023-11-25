@@ -707,6 +707,21 @@ WLED_GLOBAL WS2812FX strip _INIT(WS2812FX());
 WLED_GLOBAL BusConfig* busConfigs[WLED_MAX_BUSSES+WLED_MIN_VIRTUAL_BUSSES] _INIT({nullptr}); //temporary, to remember values from network callback until after
 WLED_GLOBAL bool doInitBusses _INIT(false);
 WLED_GLOBAL int8_t loadLedmap _INIT(-1);
+
+// #ifdef MC3DPRINTERLED_ENABLED
+WLED_GLOBAL uint16_t prntEOFF _INIT(0);
+WLED_GLOBAL uint16_t prntECON _INIT(0);
+WLED_GLOBAL uint16_t prntEIDL _INIT(0);
+WLED_GLOBAL uint16_t prntESTR _INIT(0);
+WLED_GLOBAL uint16_t prntEBHT _INIT(0);
+WLED_GLOBAL uint16_t prntENHT _INIT(0);
+WLED_GLOBAL uint16_t prntEHOM _INIT(0);
+WLED_GLOBAL uint16_t prntEPRO _INIT(0);
+WLED_GLOBAL uint16_t prntEPUS _INIT(0);
+WLED_GLOBAL uint16_t prntEERR _INIT(0);
+WLED_GLOBAL uint16_t prntECOO _INIT(0);
+// #endif
+
 #ifndef ESP8266
 WLED_GLOBAL char  *ledmapNames[WLED_MAX_LEDMAPS-1] _INIT_N(({nullptr}));
 #endif

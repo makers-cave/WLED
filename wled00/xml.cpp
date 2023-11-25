@@ -758,4 +758,33 @@ void getSettingsJS(byte subPage, char* dest)
     oappend(SET_F("gId(\"somp\").remove(1);")); // remove 2D option from dropdown
     #endif
   }
+  if (subPage == SUBPAGE_3DP){
+    //connection config
+    sappends('s',SET_F("MS"),mqttServer);
+    sappend('v',SET_F("MQPORT"),mqttPort);
+    sappends('s',SET_F("MQUSER"),mqttUser);
+    byte l = strlen(mqttPass);
+    char fpass[l+1]; //fill password field with ***
+    fpass[l] = 0;
+    memset(fpass,'*',l);
+    sappends('s',SET_F("MQPASS"),fpass);
+    sappends('s',SET_F("MQCID"),mqttClientID);
+    sappends('s',"MD",mqttDeviceTopic);
+    oappend(SET_F("d.Sf.MD.maxlength=")); oappend(itoa(MQTT_MAX_TOPIC_LEN,nS,10));  oappend(SET_F(";"));
+    oappend(SET_F("d.Sf.MS.maxlength=")); oappend(itoa(MQTT_MAX_SERVER_LEN,nS,10));  oappend(SET_F(";"));
+
+    //Event Config
+    sappend('v',SET_F("EOFF"),prntEOFF);
+    sappend('v',SET_F("ECON"),prntECON);
+    sappend('v',SET_F("EIDL"),prntEIDL);
+    sappend('v',SET_F("ESTR"),prntESTR);
+    sappend('v',SET_F("EBHT"),prntEBHT);
+    sappend('v',SET_F("ENHT"),prntENHT);
+    sappend('v',SET_F("EHOM"),prntEHOM);
+    sappend('v',SET_F("EPRO"),prntEPRO);
+    sappend('v',SET_F("EPUS"),prntEPUS);
+    sappend('v',SET_F("EERR"),prntEERR);
+    sappend('v',SET_F("ECOO"),prntECOO);
+
+  }
 }
