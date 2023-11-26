@@ -13,8 +13,8 @@ void handleSettingsSet(AsyncWebServerRequest *request, byte subPage)
     return;
   }
 
-  //0: menu 1: wifi 2: leds 3: ui 4: sync 5: time 6: sec 7: DMX 8: usermods 9: N/A 10: 2D
-  if (subPage < 1 || subPage > 10 || !correctPIN) return;
+  //0: menu 1: wifi 2: leds 3: ui 4: sync 5: time 6: sec 7: DMX 8: usermods 9: N/A 10: 2D 11: 3DP
+  if (subPage < 1 || subPage > 11 || !correctPIN) return;
 
   //WIFI SETTINGS
   if (subPage == SUBPAGE_WIFI)
@@ -719,6 +719,17 @@ void handleSettingsSet(AsyncWebServerRequest *request, byte subPage)
     strlcpy(mqttUser, request->arg(F("MQUSER")).c_str(), 41);
     strlcpy(mqttPass, request->arg(F("MQPASS")).c_str(), 65);
     strlcpy(mqttDeviceTopic, request->arg(F("MD")).c_str(), MQTT_MAX_TOPIC_LEN+1);
+    prntEOFF = request->arg(F("EOFF")).toInt();
+    prntECON = request->arg(F("ECON")).toInt();
+    prntEIDL = request->arg(F("EIDL")).toInt();
+    prntESTR = request->arg(F("ESTR")).toInt();
+    prntEBHT = request->arg(F("EBHT")).toInt();
+    prntENHT = request->arg(F("ENHT")).toInt();
+    prntEHOM = request->arg(F("EHOM")).toInt();
+    prntEPRO = request->arg(F("EPRO")).toInt();
+    prntEPUS = request->arg(F("EPUS")).toInt();
+    prntEERR = request->arg(F("EERR")).toInt();
+    prntECOO = request->arg(F("ECOO")).toInt();
   }
   lastEditTime = millis();
   // do not save if factory reset or LED settings (which are saved after LED re-init)

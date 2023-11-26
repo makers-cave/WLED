@@ -571,6 +571,19 @@ bool deserializeConfig(JsonObject doc, bool fromFS) {
 
   CJSON(e131ProxyUniverse, dmx[F("e131proxy")]);
   #endif
+  JsonObject mc3dp = doc["mc3dp"];
+  CJSON(prntTYPE, mc3dp["PT"]);
+  CJSON(prntEOFF, mc3dp["EOFF"]);
+  CJSON(prntECON, mc3dp["ECON"]);
+  CJSON(prntEIDL, mc3dp["EIDL"]);
+  CJSON(prntESTR, mc3dp["ESTR"]);
+  CJSON(prntEBHT, mc3dp["EBHT"]);
+  CJSON(prntENHT, mc3dp["ENHT"]);
+  CJSON(prntEHOM, mc3dp["EHOM"]);
+  CJSON(prntEPRO, mc3dp["EPRO"]);
+  CJSON(prntEPUS, mc3dp["EPUS"]);
+  CJSON(prntEERR, mc3dp["EERR"]);
+  CJSON(prntECOO, mc3dp["ECOO"]);
 
   DEBUG_PRINTLN(F("Starting usermod config."));
   JsonObject usermods_settings = doc["um"];
@@ -1003,6 +1016,21 @@ void serializeConfig() {
 
   dmx[F("e131proxy")] = e131ProxyUniverse;
   #endif
+
+  JsonObject mc3dp = doc.createNestedObject("mc3dp");
+  mc3dp["PT"] = prntTYPE;
+  mc3dp["EOFF"] = prntEOFF;
+  mc3dp["ECON"] = prntECON;
+  mc3dp["EIDL"] = prntEIDL;
+  mc3dp["ESTR"] = prntESTR;
+  mc3dp["EBHT"] = prntEBHT;
+  mc3dp["ENHT"] = prntENHT;
+  mc3dp["EHOM"] = prntEHOM;
+  mc3dp["EPRO"] = prntEPRO;
+  mc3dp["EPUS"] = prntEPUS;
+  mc3dp["EERR"] = prntEERR;
+  mc3dp["ECOO"] = prntECOO;
+
 
   JsonObject usermods_settings = doc.createNestedObject("um");
   usermods.addToConfig(usermods_settings);

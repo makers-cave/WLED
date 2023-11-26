@@ -234,7 +234,7 @@ void getSettingsJS(byte subPage, char* dest)
   obuf = dest;
   olen = 0;
 
-  if (subPage <0 || subPage >10) return;
+  if (subPage <0 || subPage >11) return;
 
   if (subPage == SUBPAGE_MENU)
   {
@@ -759,6 +759,7 @@ void getSettingsJS(byte subPage, char* dest)
     #endif
   }
   if (subPage == SUBPAGE_3DP){
+    char nS[32];
     //connection config
     sappends('s',SET_F("MS"),mqttServer);
     sappend('v',SET_F("MQPORT"),mqttPort);
@@ -774,6 +775,7 @@ void getSettingsJS(byte subPage, char* dest)
     oappend(SET_F("d.Sf.MS.maxlength=")); oappend(itoa(MQTT_MAX_SERVER_LEN,nS,10));  oappend(SET_F(";"));
 
     //Event Config
+    sappend('v',SET_F("PT"),prntTYPE);
     sappend('v',SET_F("EOFF"),prntEOFF);
     sappend('v',SET_F("ECON"),prntECON);
     sappend('v',SET_F("EIDL"),prntEIDL);

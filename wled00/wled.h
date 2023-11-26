@@ -24,9 +24,10 @@
 //#define WLED_DISABLE_OTA         // saves 14kb
 
 // You can choose some of these features to disable:
-//#define WLED_DISABLE_ALEXA       // saves 11kb
-//#define WLED_DISABLE_HUESYNC     // saves 4kb
-//#define WLED_DISABLE_INFRARED    // saves 12kb, there is no pin left for this on ESP8266-01
+#define WLED_DISABLE_ALEXA       // saves 11kb
+#define WLED_DISABLE_HUESYNC     // saves 4kb
+#define WLED_DISABLE_INFRARED    // saves 12kb, there is no pin left for this on ESP8266-01
+#define WLED_DISABLE_LOXONE
 #ifndef WLED_DISABLE_MQTT
   #define WLED_ENABLE_MQTT         // saves 12kb
 #endif
@@ -37,6 +38,7 @@
 #endif
 //#define WLED_ENABLE_DMX          // uses 3.5kb (use LEDPIN other than 2)
 #define WLED_ENABLE_JSONLIVE     // peek LED output via /json/live (WS binary peek is always enabled)
+
 #ifndef WLED_DISABLE_LOXONE
   #define WLED_ENABLE_LOXONE       // uses 1.2kb
 #endif
@@ -709,6 +711,7 @@ WLED_GLOBAL bool doInitBusses _INIT(false);
 WLED_GLOBAL int8_t loadLedmap _INIT(-1);
 
 // #ifdef MC3DPRINTERLED_ENABLED
+WLED_GLOBAL uint16_t prntTYPE _INIT(0);
 WLED_GLOBAL uint16_t prntEOFF _INIT(0);
 WLED_GLOBAL uint16_t prntECON _INIT(0);
 WLED_GLOBAL uint16_t prntEIDL _INIT(0);

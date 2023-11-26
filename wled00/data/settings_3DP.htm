@@ -6,9 +6,14 @@
 	<title>3D Printer Setup</title>
 	<script>
 		var d = document;
+        var loc = false, locip, locproto = "http:";
+        function getURL(path) {
+			return (loc ? locproto + "//" + locip : "") + path;
+	    }
 		function B() { window.open("../settings","_self"); }
         function H() {window.open("https://kno.wled.ge/features/settings/#wifi-settings");}
         function gId(c) {return d.getElementById(c);}
+        function cE(e) { return d.createElement(e); }
         function so(id, e, v) {gId(id).style.display = e.value == v? 'block':'none';}
         function sp(e) { so('blp',e, '0'); so('evt',e,'0'); so('crp',e, '1') }
         function lp() {
@@ -81,14 +86,14 @@
 		@import url("style.css");
 	</style>
 </head>
-<body onload="s();lp()">
+<body onload="S();lp()">
 	<form id="form_s" name="Sf" method="post" onsubmit="os(this)">
         <div class="toprow">
 		<div class="helpB"><button type="button" onclick="H()">?</button></div>
 		<button type="button" onclick="B()">Back</button><button type="submit">Save & Connect</button><hr>
 		</div>
 		<h2>Please select a printer</h2>
-        <select onchange="sp(this)">
+        <select onchange="sp(this)" name="PT">
 		<option value="0">Bambulab</option>
 		<option value="1">Creality Marlin</option>
 		</select><br>
