@@ -762,6 +762,9 @@ void getSettingsJS(byte subPage, char* dest)
     #endif
   }
   if (subPage == SUBPAGE_3DP){
+    // um_data_t *um_data;
+    // usermods.getUMData(&um_data, USERMOD_ID_3DPRINTER_LED);
+    // delete um_data;
     char nS[32];
     //connection config
     sappends('s',SET_F("MS"),mqttServer);
@@ -790,6 +793,5 @@ void getSettingsJS(byte subPage, char* dest)
     sappend('v',SET_F("EPUS"),prntEPUS);
     sappend('v',SET_F("EERR"),prntEERR);
     sappend('v',SET_F("ECOO"),prntECOO);
-
   }
 }

@@ -1,6 +1,18 @@
 #pragma once
+#include <Arduino.h>
+#ifdef ESP32
+    #include <WiFi.h>
+#elif defined(ESP8266)
+    #include <ESP8266WiFi.h>
+    #include <WiFiClientSecure.h>
+#endif
+
+#include <PubSubClient.h>
 
 #include "wled.h"
+  #define DEBUGSR_PRINT(x)
+  #define DEBUGSR_PRINTLN(x)
+  #define DEBUGSR_PRINTF(x...)
 
 #ifndef MC3DPRINTERLED_ENABLED
   #define MC3DPRINTERLED_ENABLED
@@ -48,17 +60,6 @@ class MC3DPrinterLED : public Usermod {
     bool initDone = false;
     unsigned long lastTime = 0;
 
-    // set your config variables to their boot default value (this can also be done in readFromConfig() or a constructor if you prefer)
-    bool testBool = false;
-    unsigned long testULong = 42424242;
-    float testFloat = 42.42;
-    String testString = "Forty-Two";
-
-    // These config variables have defaults set inside readFromConfig()
-    int testInt;
-    long testLong;
-    int8_t testPins[2];
-
     // string that are used multiple time (this will save some flash memory)
     static const char _name[];
     static const char _enabled[];
@@ -77,22 +78,6 @@ class MC3DPrinterLED : public Usermod {
      * Get usermod enabled/disabled state
      */
     inline bool isEnabled() { return enabled; }
-
-    // in such case add the following to another usermod:
-    //  in private vars:
-    //   #ifdef USERMOD_EXAMPLE
-    //   MyExampleUsermod* UM;
-    //   #endif
-    //  in setup()
-    //   #ifdef USERMOD_EXAMPLE
-    //   UM = (MyExampleUsermod*) usermods.lookup(USERMOD_ID_EXAMPLE);
-    //   #endif
-    //  somewhere in loop() or other member method
-    //   #ifdef USERMOD_EXAMPLE
-    //   if (UM != nullptr) isExampleEnabled = UM->isEnabled();
-    //   if (!isExampleEnabled) UM->enable(true);
-    //   #endif
-
 
     // methods called by WLED (can be inlined as they are called only once but if you call them explicitly define them out of class)
 
@@ -173,19 +158,19 @@ class MC3DPrinterLED : public Usermod {
      * topic only contains stripped topic (part after /wled/MAC)
      */
     bool onMqttMessage(char* topic, char* payload) {
-      DynamicJsonDocument messageobject(2096);
-      auto deserializeError = deserializeJson(messageobject, payload);
-      if (!deserializeError){
-          if (!messageobject.containsKey("print")) {
-              return;
-          }
-          HandleMessage(messageobject);
-      }else{
-          Serial.println(F("Deserialize error while parsing mqtt"));
-      }
+      // DynamicJsonDocument messageobject(2096);
+      // auto deserializeError = deserializeJson(messageobject, payload);
+      // if (!deserializeError){
+      //     if (!messageobject.containsKey("print")) {
+      //         return;
+      //     }
+      //     HandleMessage(messageobject);
+      // }else{
+      //     Serial.println(F("Deserialize error while parsing mqtt"));
+      // }
 
       //M104 Hotend heating
-
+      DEBUGSR_PRINTLN(F(payload));
       return false;
     }
 
