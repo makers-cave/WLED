@@ -73,6 +73,7 @@
 			scE.addEventListener("load", () => {
 				//console.log("File loaded");
 				GetV();
+				if (d.Sf.MD.value) d.Sf.MD.value =d.Sf.MD.value.replace('device/',''); 
 			});
 			// error event
 			scE.addEventListener("error", (ev) => {
