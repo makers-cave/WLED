@@ -4,15 +4,12 @@
     #include <WiFi.h>
 #elif defined(ESP8266)
     #include <ESP8266WiFi.h>
-    #include <WiFiClientSecure.h>
 #endif
+#include <WiFiClientSecure.h>
 
 #include <PubSubClient.h>
 
 #include "wled.h"
-  #define DEBUGSR_PRINT(x)
-  #define DEBUGSR_PRINTLN(x)
-  #define DEBUGSR_PRINTF(x...)
 
 #ifndef MC3DPRINTERLED_ENABLED
   #define MC3DPRINTERLED_ENABLED
@@ -31,6 +28,12 @@ typedef enum {
   EVT_ERROR,
   EVT_COOLING
 } PrinterStates;
+WiFiClientSecure wifiSecureClient;
+PubSubClient mqttClient(wifiSecureClient);
+unsigned long mqttattempt = (millis()-3000);
+String device_topic;
+String report_topic;
+String clientId = "BLLED-";
 /*
  * Usermods allow you to add own functionality to WLED more easily
  * See: https://github.com/Aircoookie/WLED/wiki/Add-own-functionality
@@ -90,6 +93,8 @@ class MC3DPrinterLED : public Usermod {
       // do your set-up here
       //Serial.println("Hello from my usermod!");
       initDone = true;
+      Serial.begin(115200);
+      Serial.println("Setup Called");
     }
 
 
@@ -99,9 +104,76 @@ class MC3DPrinterLED : public Usermod {
      */
     void connected() {
       CurrentState = EVT_OFF;
+      setupMqtt();
+    }
+    void connectMqtt(){
+      Serial.println(F("Connected Called:"));
+
+      device_topic = String("device/00M00A2B0800731");
+      report_topic = device_topic + String("/report");
+
+      if (!mqttClient.connected() && (millis() - mqttattempt) >= 3000){   
+          if (mqttClient.connect(clientId.c_str(),"bblp","392b9566")){
+              Serial.println(F("Connected to mqtt"));
+              Serial.println(report_topic);
+              mqttClient.subscribe(report_topic.c_str());
+          }else{
+              switch (mqttClient.state())
+              {
+              case -4: // MQTT_CONNECTION_TIMEOUT
+                  Serial.println(F("MQTT TIMEOUT"));
+                  break;
+              case -2: // MQTT_CONNECT_FAILED
+                  Serial.println(F("MQTT CONNECT_FAILED"));
+                  break;
+              case -3: // MQTT_CONNECTION_LOST
+                  Serial.println(F("MQTT CONNECTION_LOST"));
+                  break;
+              case -1: // MQTT_DISCONNECTED
+                  Serial.println(F("MQTT DISCONNECTEDT"));
+                  break;
+              case 1:
+                  break;
+              case 2:
+                  break;
+              case 3:
+                  break;
+              case 4:
+                  break;
+              case 5: // MQTT UNAUTHORIZED
+                  Serial.println(F("MQTT UNAUTHORIZED"));
+                  ESP.restart();
+                  break;
+              }
+          }
+      }
     }
 
-
+    void setupMqtt(){
+        clientId += String(random(0xffff), HEX);
+        Serial.println(F("Setting up MQTT with ip: "));
+        Serial.println("10.0.0.47");
+        wifiSecureClient.setInsecure();
+        mqttClient.setBufferSize(2096); //4096
+        mqttClient.setServer("10.0.0.47", 8883);
+        // mqttClient.setCallback(mqttCallback);
+        //mqttClient.setSocketTimeout(20);
+        Serial.println(F("Finished setting up MQTT, Attempting to connect"));
+        connectMqtt();
+    }
+    void mqttCallback(char *topic, byte *payload, unsigned int length){
+      DynamicJsonDocument messageobject(2096);
+      auto deserializeError = deserializeJson(messageobject, payload, length);
+      if (!deserializeError){
+          if (!messageobject.containsKey("print")) {
+              return;
+          }
+          serializeJson(messageobject, Serial);
+          // ParseCallback(messageobject);
+      }else{
+          Serial.println(F("Deserialize error while parsing mqtt"));
+      }
+    }
     /*
      * loop() is called continuously. Here you can check for events, read sensors, etc.
      * 
@@ -170,7 +242,6 @@ class MC3DPrinterLED : public Usermod {
       // }
 
       //M104 Hotend heating
-      DEBUGSR_PRINTLN(F(payload));
       return false;
     }
 
